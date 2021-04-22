@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 void main() {
   runApp(new MyApp());
 }
@@ -36,6 +37,10 @@ class _Home extends State<Home> {
     "Km", "Hm","Dam","M", "Dm","Cm", "Mm"
   ];
 
+
+
+  TextEditingController valueController = new TextEditingController();
+
   final ButtonStyle flatButtonStyle =  ElevatedButton.styleFrom(
   onPrimary: Colors.black87,
   primary: Colors.grey[300],
@@ -46,10 +51,20 @@ class _Home extends State<Home> {
     ),
   );
 
+  double w =0.0;
 
-  int convert (x,valueChoose,valueChoose1){
-    int y , z;
-    int w =0;
+
+  double convert (x,valueChoose,valueChoose1){
+
+    setState(() {
+
+
+    double y , z ;
+
+    double j   ;
+
+    var h = double.parse(x);
+
     if( valueChoose == 'Km')
       y = 1;
     if( valueChoose == 'Hm')
@@ -78,15 +93,17 @@ class _Home extends State<Home> {
     if( valueChoose1 == 'Cm')
       z = 100000;
     if( valueChoose1 == 'Mm')
-      z = 1000000;
+     z = 1000000;
 
+     j=  (z/y)  ;
 
-    if( x == 0 ){
-      w = 0;
-      w= x * (z/y);
-    }
+     w= h * j;
 
-    return w;
+    debugPrint('data: $z');
+    debugPrint('data: $y ');
+    debugPrint('data: $w ');
+   //return w;
+    });
   }
 
   @override
@@ -105,6 +122,7 @@ class _Home extends State<Home> {
         child: new Column(
           children: <Widget>[
             new TextField(
+              controller: valueController,
               obscureText: false,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -148,17 +166,25 @@ class _Home extends State<Home> {
 
             new TextButton(
               style: flatButtonStyle,
+
               onPressed: () {
-                convert(x, valueChoose, valueChoose1);
+
+                  convert(valueController.text, valueChoose, valueChoose1);
+
+
               },
               child: Text('Convert'),
-            )
+            ),
+
+
+          new  Center( child: Text('$w')),
+
+
+
+
           ],
 
         ),
       ),
     );
   }
-
-
-}
